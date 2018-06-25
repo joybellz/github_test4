@@ -36,22 +36,34 @@ curl -u $username https://api.github.com/user/repos -d '{"name":"'$reponame'"}'
 echo " done."
 
 # create .gitignore file
-echo "Creating .gitignore ..."
-touch .gitignore
+#echo "Creating .gitignore ..."
+#touch .gitignore
+
 echo " done."
 
 # push to remote repo
-echo "Pushing to remote ..."
+echo -n "Pushing local code to remote ..."
 git init
+echo "gitlab-init-remote.sh" > .gitignore
+echo ".gitignore" >> .gitignore
+git config --global core.excudefiles ~/.gitignore_global
 git add .
 git commit -m "first commit"
-git remote rm origin
-git remote add origin https://github.com/$username/$reponame.git
-git push -u origin master
-git config branch.master.remote origin
-git config branch.master.merge.refs/heads/master
-git fetch
-git merger master
-git branch -a
+git remote add origin git@gitlab.com:$username/$repo_name.git > /dev/null 2>&1
+git push -u origin master > /dev/null 2>&1echo "Pushing local code to remote ..."
 echo " done. Successfully created https://github.com/$username/$reponame"
+
+#################################################################################
+# git init
+# git add .
+# git commit -m "first commit"
+# git remote rm origin
+# git remote add origin https://github.com/$username/$reponame.git
+# git push -u origin master
+# git config branch.master.remote origin
+# git config branch.master.merge.refs/heads/master
+# git fetch
+# git merger master
+# git branch -a
+
 
