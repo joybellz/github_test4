@@ -1,5 +1,9 @@
 #!/bin/sh
 # 
+##################################################################################################
+# 6/25/18 - This works to remote create repo to github.com/joybellz as long as you change        # github.user to be the github user's account name.                                                #
+##################################################################################################
+
 # get user name
 username=`git config github.user`
 if [ "$username" = "" ]; then
@@ -31,9 +35,9 @@ echo "Creating Github repository '$reponame' ..."
 curl -u $username https://api.github.com/user/repos -d '{"name":"'$reponame'"}'
 echo " done."
 
-# create empty README.md
-echo "Creating README ..."
-touch README.md
+# create .gitignore file
+echo "Creating .gitignore ..."
+touch .gitignore
 echo " done."
 
 # push to remote repo
@@ -44,19 +48,5 @@ git commit -m "first commit"
 git remote rm origin
 git remote add origin https://github.com/$username/$reponame.git
 git push -u origin master
-echo " done."
+echo " done. Successfully created https://github.com/$username/$reponame"
 
-# open in a browser
-read -p "Do you want to open the new repo page in browser?(y/n): " answer_browser
-
-case $answer_browser in
- y)
-
-	echo "Opening in a browser ..."
-	open https://github.com/$username/$reponame
-    ;;
-  n)
-    ;;
-  *)
-    ;;
-esac
